@@ -1,10 +1,59 @@
 import sys
 from time import sleep
-from views.menu_options import (
+from views.options import (
     generate_menu_options,
-    loop_menu
+
 )
 from utils import clear_screen
+
+
+def loop_menu(function: callable) -> callable:
+    """
+    This decorator loop function.
+    Params:
+        function (callable): The function to be looped.
+    Returns:
+        None
+    """
+    def wrapper(*args, **kwargs):
+        # get context from args or kwargs
+        context = args[0] if len(args) > 0 else kwargs["context"]
+        while True:
+            try:
+                context = function(context)
+                if "loop" in context:
+                    del context["loop"]
+                    continue
+                if "return" in context:
+                    context["loop"] = True
+                    del context["return"]
+                break
+            except ValueError:
+                print("\n")
+                print("¡Error! Debes introducir un número.")
+                print("\n")
+                input("Pulsa una tecla para continuar...")
+            except KeyboardInterrupt:
+                print("\n")
+                print("Has cancelado la ejecución del programa.")
+                print("\n")
+                input("Pulsa una tecla para salir...")
+                sys.exit()
+            except KeyError:
+                print("\n")
+                print("¡Error! Debes introducir una opción válida.")
+                print("\n")
+                input("Pulsa una tecla para continuar...")
+            except Exception as e:
+                print(e)
+                print("\n")
+                print("¡Error! No se ha podido ejecutar la opción.")
+                print("\n")
+                input("Pulsa una tecla para continuar...")
+            clear_screen()
+        clear_screen()
+        return context
+    return wrapper
 
 
 def generate_title() -> None:
@@ -42,7 +91,7 @@ def generate_title() -> None:
 
 
 @loop_menu
-def main_menu(context: dict) -> None:
+def main_menu(context: dict) -> dict:
     """
     This function generates the main menu of the application.
 
@@ -50,7 +99,7 @@ def main_menu(context: dict) -> None:
         context (dict): The context of the application.
 
     Returns:
-        None
+        dict: The context of the application.
     """
     option = None
     options = {
@@ -68,7 +117,7 @@ def main_menu(context: dict) -> None:
 
 
 @loop_menu
-def actions_menu(context: dict) -> None:
+def actions_menu(context: dict) -> dict:
     """
     This function generates the actions menu of the application.
 
@@ -76,13 +125,13 @@ def actions_menu(context: dict) -> None:
         context (dict): The context of the application.
 
     Returns:
-        None
+        dict: The context of the application.
     """
     pass
 
 
 @loop_menu
-def file_menu(context) -> None:
+def file_menu(context) -> dict:
     """
     This function generates the file menu of the application.
 
@@ -90,12 +139,38 @@ def file_menu(context) -> None:
         context (dict): The context of the application.
 
     Returns:
-        None
+        dict: The context of the application.
     """
     option = None
     options = {
+        "Cargar Archivo": load_file,
+        "Volver": lambda context: {"return": True, **context},
         "Salir": call_exit,
-        "Volver": lambda context: {"return": True, **context}
+    }
+    option_keys = list(options.keys())
+    generate_title()
+    options_dict = generate_menu_options(option_keys)
+    option = int(input("Selecciona una opción: "))
+    method = options[options_dict[option]]
+    clear_screen()
+    return method(context)
+
+
+@loop_menu
+def load_file(context: dict) -> dict:
+    """
+    Params:
+        context (dict): The context of the application.
+
+    Returns:
+        dict: The context of the application.
+    """
+    option = None
+    options = {
+        "Cargar Archivo por defecto (./competencia.txt)": lambda context: context,
+        "Cargar Archivo personalizado": lambda context: context,
+        "Volver": lambda context: {"return": True, **context},
+        "Salir": call_exit,
     }
     option_keys = list(options.keys())
     generate_title()
