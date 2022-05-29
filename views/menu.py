@@ -17,7 +17,9 @@ def loop_menu(function: callable) -> callable:
     """
     def wrapper(*args, **kwargs):
         # get context from args or kwargs
-        context = args[0] if len(args) > 0 else kwargs["context"]
+        context = args[0] if len(args) > 0 else kwargs.get("context", {})
+        if not isinstance(context, dict):
+            raise TypeError("El contexto debe ser un diccionario")
         while True:
             try:
                 context = function(context)
@@ -131,7 +133,7 @@ def actions_menu(context: dict) -> dict:
 
 
 @loop_menu
-def file_menu(context) -> dict:
+def file_menu(context: dict) -> dict:
     """
     This function generates the file menu of the application.
 
