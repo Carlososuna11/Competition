@@ -1,3 +1,3 @@
-from views.menu import main_menu
+from views.main import main
 if __name__ == '__main__':
-    main_menu()
+    main()
