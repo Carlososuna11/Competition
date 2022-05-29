@@ -23,7 +23,7 @@ def load_file(filename: str, *args: any, **kwargs: any) -> dict:
 
     filename = filename
     if filename is None:
-        raise NotImplementedError("No se ha definido el nombre del archivo.")
+        raise FileNotFoundError("No se ha definido el nombre del archivo.")
     path = get_path(filename)
     if not file_exists(path):
         raise FileNotFoundError(

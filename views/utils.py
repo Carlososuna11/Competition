@@ -1,6 +1,8 @@
 import os
 import sys
 from time import sleep
+
+from numpy import histogram
 from exceptions import (
     NotTextPlainFile,
     IncompleteParticipantData
@@ -43,9 +45,6 @@ def generate_title(context: dict) -> None:
     if "file_path" in context:
         file_path = context["file_path"]
         print(f"  Archivo cargado: {file_path}")
-    if "participants" in context:
-        participants = context["participants"]
-        print(f"  Cantidad de participants: {len(participants)}")
 
 
 def clear_screen() -> None:
@@ -169,3 +168,48 @@ def generate_menu_options(options: list[str]) -> dict:
         print("-", end="")
     print("\n")
     return options_dict
+
+
+def print_table(table: list) -> None:
+    longest_cols = [
+        (max([len(str(row[i])) for row in table]) + 3)
+        for i in range(len(table[0]))
+    ]
+    row_format = "".join(["{:>" + str(longest_col) + "}"
+                          for longest_col in longest_cols])
+    for row in table:
+        print(row_format.format(*row))
+
+
+def historigram(table: list) -> None:
+    """
+    This function generates a histogram.
+    Params:
+        table (list): The table to be printed.
+    Returns:
+        None
+    """
+    table = table[1:]
+    histogram_list = []
+    for category, count in table:
+        histogram_list.append(
+            (f"{category} ({count}):", f"| {'*'* int(count)}"))
+
+    print_table(histogram_list)
+
+
+def one_line_view(table: list) -> None:
+    """
+    This function generates a one line view.
+    Params:
+        table (list): The table to be printed.
+    Returns:
+        None
+    """
+    keys = table[0]
+    table = table[1:]
+    for index,value in enumerate(table):
+        for key, element in zip(keys, value):
+            print(f"{key}: {element}", end=" ")
+        if index < len(table)-1:
+            print("|", end=" ")
