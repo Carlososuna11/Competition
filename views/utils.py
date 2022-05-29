@@ -175,10 +175,21 @@ def print_table(table: list) -> None:
         (max([len(str(row[i])) for row in table]) + 3)
         for i in range(len(table[0]))
     ]
-    row_format = "".join(["{:>" + str(longest_col) + "}"
-                          for longest_col in longest_cols])
+    row_formats = []
+    for index, longest_col in enumerate(longest_cols):
+        if index < len(longest_cols)-1:
+            row_formats.append("| {:^" + str(longest_col) + "s}")
+        else:
+            row_formats.append("| {:^" + str(longest_col) + "s} |")
+
+    row_format = "".join(row_formats)
+
     for row in table:
+        row = [str(cell) for cell in row]
+        row_print = row_format.format(*row)
+        print("-" * len(row_print))
         print(row_format.format(*row))
+    print("-" * len(row_print))
 
 
 def historigram(table: list) -> None:
@@ -195,7 +206,18 @@ def historigram(table: list) -> None:
         histogram_list.append(
             (f"{category} ({count}):", f"| {'*'* int(count)}"))
 
-    print_table(histogram_list)
+    table = histogram_list
+
+    longest_cols = [
+        (max([len(str(row[i])) for row in table]) + 3)
+        for i in range(len(table[0]))
+    ]
+
+    row_format = "".join(["{:<" + str(longest_col) + "}"
+                          for longest_col in longest_cols])
+
+    for row in table:
+        print(row_format.format(*row))
 
 
 def one_line_view(table: list) -> None:
@@ -208,8 +230,12 @@ def one_line_view(table: list) -> None:
     """
     keys = table[0]
     table = table[1:]
-    for index,value in enumerate(table):
+    to_print = ""
+    for index, value in enumerate(table):
         for key, element in zip(keys, value):
-            print(f"{key}: {element}", end=" ")
+            if key not in ["", " "]:
+                to_print += f"{key}: {element}, "
         if index < len(table)-1:
-            print("|", end=" ")
+            to_print += " | "
+    to_print = to_print.rstrip(",").rstrip(" ")
+    print(to_print)

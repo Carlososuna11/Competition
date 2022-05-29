@@ -4,7 +4,8 @@ from views.utils import (
     loop_menu,
     generate_menu_options,
     print_table,
-    one_line_view
+    one_line_view,
+    historigram,
 )
 from controllers import call_controller
 
@@ -33,12 +34,17 @@ def actions_menu(context: dict) -> dict:
         input("Pulsa una tecla para continuar...")
         return {"return": True, **context}
     option = None
-    participants = context["participants"]
     options = {
         "Cantidad total de participantes": count_participants_view,
         "Lista con la totalidad de los participantes": list_participants_view,
         "Cantidad de participantes por grupo etario": list_participants_by_etarian_group_view,
         "Cantidad de participantes por sexo": list_participants_by_gender_view,
+        "Ganadores por grupo etario": list_winners_by_etarian_group_view,
+        "Ganadores por sexo": list_winners_by_gender_view,
+        "Ganadores por Grupo Etario y sexo": list_winners_by_gender_and_etarian_group_views,
+        "Ganador General": general_winner_view,
+        "Historigrama de Participantes por grupo Etario": historigram_etarian_group_view,
+        "Promedio de Tiempo por grupo Etario y Sexo": list_average_by_gender_and_etarian_group_view,
         "Volver": lambda context: {"return": True, **context},
         "Salir": call_exit,
     }
@@ -154,6 +160,161 @@ def list_participants_by_gender_view(context):
         print("-", end="")
     print("\n")
     one_line_view(participants)
+    print("\n")
+    input("Pulsa una tecla para continuar...")
+    return {"return": True, **context}
+
+
+@loop_menu
+def list_winners_by_etarian_group_view(context):
+    """
+    This function prints the list of winners by etarian group.
+
+    Params:
+        context (dict): The context of the application.
+    """
+
+    winners = call_controller(
+        "participant",
+        "winners_by_etarian_group",
+        context.get("participants", []),
+    )
+    print("\n")
+    print("Lista de ganadores por Grupo Etario")
+    print("\n")
+    for i in range(60):
+        print("-", end="")
+    print("\n")
+    print_table(winners)
+    print("\n")
+    input("Pulsa una tecla para continuar...")
+    return {"return": True, **context}
+
+
+@loop_menu
+def list_winners_by_gender_view(context):
+    """
+    This function prints the list of winners by etarian group.
+
+    Params:
+        context (dict): The context of the application.
+    """
+
+    winners = call_controller(
+        "participant",
+        "winners_by_gender",
+        context.get("participants", []),
+    )
+    print("\n")
+    print("Lista de ganadores por Sexo")
+    print("\n")
+    for i in range(60):
+        print("-", end="")
+    print("\n")
+    print_table(winners)
+    print("\n")
+    input("Pulsa una tecla para continuar...")
+    return {"return": True, **context}
+
+
+@loop_menu
+def list_winners_by_gender_and_etarian_group_views(context):
+    """
+    This function prints the list of winners by etarian group.
+
+    Params:
+        context (dict): The context of the application.
+    """
+
+    winners = call_controller(
+        "participant",
+        "winners_by_gender_and_etarian_group",
+        context.get("participants", []),
+    )
+    print("\n")
+    print("Lista de ganadores por Sexo y por Grupo Etario")
+    print("\n")
+    for i in range(60):
+        print("-", end="")
+    print("\n")
+    print_table(winners)
+    print("\n")
+    input("Pulsa una tecla para continuar...")
+    return {"return": True, **context}
+
+
+@loop_menu
+def general_winner_view(context):
+    """
+    This function prints the general winner.
+
+    Params:
+        context (dict): The context of the application.
+    """
+
+    winner = call_controller(
+        "participant",
+        "general_winner",
+        context.get("participants", []),
+    )
+    print("\n")
+    print("Ganador General")
+    print("\n")
+    for i in range(60):
+        print("-", end="")
+    print("\n")
+    one_line_view(winner)
+    print("\n")
+    input("Pulsa una tecla para continuar...")
+    return {"return": True, **context}
+
+
+@loop_menu
+def historigram_etarian_group_view(context):
+    """
+    This function prints the general winner.
+
+    Params:
+        context (dict): The context of the application.
+    """
+
+    winner = call_controller(
+        "participant",
+        "etarian_participants",
+        context.get("participants", []),
+    )
+    print("\n")
+    print("Histograma por Grupo Etario")
+    print("\n")
+    for i in range(60):
+        print("-", end="")
+    print("\n")
+    historigram(winner)
+    print("\n")
+    input("Pulsa una tecla para continuar...")
+    return {"return": True, **context}
+
+@loop_menu
+def list_average_by_gender_and_etarian_group_view(context):
+    """
+    This function prints the general winner.
+
+    Params:
+        context (dict): The context of the application.
+    """
+
+    winners = call_controller(
+        "participant",
+        "average_by_gender_and_etarian_group",
+        context.get("participants", []),
+    )
+    print("\n")
+    print("Promedio de Tiempo por grupo etario y sexo")
+    print("\n")
+    for i in range(60):
+        print("-", end="")
+    print("\n")
+    print_table(winners)
     print("\n")
     input("Pulsa una tecla para continuar...")
     return {"return": True, **context}

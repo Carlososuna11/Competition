@@ -50,9 +50,9 @@ class Participant():
                 self.first_name,
                 self.first_char_second_name,
                 self.gender,
-                self.age,
-                self.hours,
-                self.minutes,
-                self.seconds
+                str(self.age),
+                str(self.hours),
+                str(self.minutes),
+                str(self.seconds)
             ]
         )
