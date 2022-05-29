@@ -8,7 +8,6 @@ from views.utils import (
     clear_screen,
     call_exit,
     loop_menu,
-    generate_title,
     generate_menu_options
 )
 
@@ -31,7 +30,6 @@ def main(context: dict) -> dict:
         "Salir": call_exit
     }
     option_keys = list(options.keys())
-    generate_title()
     options_dict = generate_menu_options(option_keys)
     option = int(input("Selecciona una opción: "))
     method = options[options_dict[option]]

@@ -34,18 +34,18 @@ def get_path(path: str) -> str:
         str: The absolute path of the file.
 
     """
-    return os.path.abspath(os.path.join(os.path.dirname(__file__), path))
+    return os.path.abspath(path)
 
 
-def path_exists(path: str) -> bool:
+def file_exists(path: str) -> bool:
     """
-    Check if the path exists.
+    Check if the file exists.
 
     Params:
-        path (str): The path to be checked.
+        path (str): The file to be checked.
 
     Returns:
         bool: True if the path exists, False otherwise.
 
     """
-    return os.path.exists(path)
+    return os.path.isfile(path)

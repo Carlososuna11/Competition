@@ -2,7 +2,6 @@ from views.utils import (
     clear_screen,
     call_exit,
     loop_menu,
-    generate_title,
     generate_menu_options
 )
 

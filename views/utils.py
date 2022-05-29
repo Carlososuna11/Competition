@@ -1,15 +1,20 @@
 import os
 import sys
 from time import sleep
+from exceptions import (
+    NotTextPlainFile,
+    IncompleteParticipantData
+)
 
 
-def generate_title() -> None:
+def generate_title(context: dict) -> None:
     """
     This function generates the title of the application
 
     Returns:
         None
     """
+    clear_screen()
     print("\n\n")
     for i in range(60):
         print("-", end="")
@@ -35,6 +40,12 @@ def generate_title() -> None:
         print(character, end="")
         sleep(0.00005)
     print("\n")
+    if "file_path" in context:
+        file_path = context["file_path"]
+        print(f"  Archivo cargado: {file_path}")
+    if "participants" in context:
+        participants = context["participants"]
+        print(f"  Cantidad de participants: {len(participants)}")
 
 
 def clear_screen() -> None:
@@ -80,6 +91,7 @@ def loop_menu(function: callable) -> callable:
             raise TypeError("El contexto debe ser un diccionario")
         while True:
             try:
+                generate_title(context)
                 context = function(context)
                 if "loop" in context:
                     del context["loop"]
@@ -104,6 +116,26 @@ def loop_menu(function: callable) -> callable:
                 print("¡Error! Debes introducir una opción válida.")
                 print("\n")
                 input("Pulsa una tecla para continuar...")
+            except (
+                FileNotFoundError,
+                NotTextPlainFile,
+                IncompleteParticipantData
+            ) as e:
+                print("\n")
+                print(f"¡Error! {e}")
+                print("\n")
+                input("Pulsa una tecla para continuar...")
+                for_remove = [
+                    "file_path",
+                    "participants",
+                    "file",
+                    "filename",
+                ]
+                for key in for_remove:
+                    if key in context:
+                        del context[key]
+                context["loop"] = True
+                break
             except Exception as e:
                 print(e)
                 print("\n")
