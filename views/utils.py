@@ -2,7 +2,6 @@ import os
 import sys
 from time import sleep
 
-from numpy import histogram
 from exceptions import (
     NotTextPlainFile,
     IncompleteParticipantData

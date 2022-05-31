@@ -277,10 +277,16 @@ def average_by_filter(
                 participant.total_time for participant in filtered_list
             ]
         ) / len(filtered_list)
+        minutes, seconds = divmod(int(average), 60)
+        hours, minutes = divmod(minutes, 60)
         participants_list.append(
             [
                 category,
-                f"{average/3600:.2f}",
+                "{}:{}:{}".format(
+                    hours,
+                    minutes,
+                    seconds
+                )
             ]
         )
     return participants_list

@@ -1,3 +1,5 @@
+import datetime
+
 
 class Participant():
     """
@@ -37,6 +39,11 @@ class Participant():
         self.total_time = self.seconds
         self.total_time += self.minutes * 60
         self.total_time += self.hours * 3600
+        self.time = datetime.time(
+            hour=self.hours,
+            minute=self.minutes,
+            second=self.seconds
+        )
 
     def __str__(self) -> str:
         return f"{self.first_name} {self.first_last_name}"
