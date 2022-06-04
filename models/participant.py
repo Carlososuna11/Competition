@@ -47,7 +47,7 @@ class Participant():
         self.second_last_name = second_last_name
         self.first_name = first_name
         self.first_char_second_name = first_char_second_name
-        self.gender = gender
+        self.gender = gender.upper()
         self.age = int(age)
         self.hours = int(hours)
         self.minutes = int(minutes)
