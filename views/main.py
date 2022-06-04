@@ -1,8 +1,8 @@
 from views.files import (
-    file_menu
+    file_menu,
 )
-from views.actions import(
-    actions_menu
+from views.actions import (
+    actions_menu,
 )
 from views.utils import (
     clear_screen,
@@ -10,6 +10,7 @@ from views.utils import (
     loop_menu,
     generate_menu_options
 )
+
 
 # first call the decorator and then will call the function
 @loop_menu

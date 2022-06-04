@@ -19,9 +19,8 @@ from controllers.participant import (
     average_by_gender_and_etarian_group,
 )
 
+
 # first call the decorator and then will call the function
-
-
 @loop_menu
 def actions_menu(context: dict) -> dict:
     """
@@ -53,14 +52,14 @@ def actions_menu(context: dict) -> dict:
     options = {
         "Cantidad total de participantes": count_participants_view,
         "Lista con la totalidad de los participantes": list_participants_view,
-        "Cantidad de participantes por grupo etario": list_participants_by_etarian_group_view,
-        "Cantidad de participantes por sexo": list_participants_by_gender_view,
+        "Cantidad de participantes por grupo etario": list_participants_by_etarian_group_view,  # noqa E501
+        "Cantidad de participantes por sexo": list_participants_by_gender_view,  # noqa E501
         "Ganadores por grupo etario": list_winners_by_etarian_group_view,
         "Ganadores por sexo": list_winners_by_gender_view,
-        "Ganadores por Grupo Etario y sexo": list_winners_by_gender_and_etarian_group_views,
+        "Ganadores por Grupo Etario y sexo": list_winners_by_gender_and_etarian_group_views,    # noqa E501
         "Ganador General": general_winner_view,
-        "Historigrama de Participantes por grupo Etario": historigram_etarian_group_view,
-        "Promedio de Tiempo por grupo Etario y Sexo": list_average_by_gender_and_etarian_group_view,
+        "Historigrama de Participantes por grupo Etario": historigram_etarian_group_view,   # noqa E501
+        "Promedio de Tiempo por grupo Etario y Sexo": list_average_by_gender_and_etarian_group_view,    # noqa E501
         "Volver": lambda context: {"return": True, **context},
         "Salir": call_exit,
     }

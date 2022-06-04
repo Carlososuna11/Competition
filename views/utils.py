@@ -28,13 +28,13 @@ def generate_title(context: dict) -> None:
     sleep(0.1)
     print(" / ___|___  _ __ ___  _ __   ___| |_(_) |_(_) ___  _ __  ")
     sleep(0.1)
-    print("| |   / _ \| '_ ` _ \| '_ \ / _ \ __| | __| |/ _ \| '_ \ ")
+    print("| |   / _ \| '_ ` _ \| '_ \ / _ \ __| | __| |/ _ \| '_ \ ")  # noqa  W605
     sleep(0.1)
-    print("| |__| (_) | | | | | | |_) |  __/ |_| | |_| | (_) | | | |")
+    print("| |__| (_) | | | | | | |_) |  __/ |_| | |_| | (_) | | | |")  # noqa  W605
     sleep(0.1)
-    print(" \____\___/|_| |_| |_| .__/ \___|\__|_|\__|_|\___/|_| |_|")
+    print(" \____\___/|_| |_| |_| .__/ \___|\__|_|\__|_|\___/|_| |_|")  # noqa  W605
     sleep(0.1)
-    print("                     |_|                                 ")
+    print("                     |_|                                 ")  # noqa  W605
     sleep(0.1)
     author = "by Carlos Osuna"
     author = f"{author:^80}"
@@ -108,8 +108,8 @@ def loop_menu(function: callable) -> callable:
                     del context["loop"]
                     continue
                 """
-                return in contexts means that the before function is called again.
-                (there is break)
+                return in contexts means that the before function is
+                called again. (there is break)
                 """
                 if "return" in context:
                     context["loop"] = True

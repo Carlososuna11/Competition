@@ -51,7 +51,8 @@ def load_file(
     if not is_text_plain_v2(path):
         raise NotTextPlainFile(path)
 
-    # this way is more complex because it verify if the file is binary first and then negate the result.
+    # this way is more complex because it verify if the file is binary
+    # first and then negate the result.
     if not is_text_plain_file(path):
         raise NotTextPlainFile(path)
 

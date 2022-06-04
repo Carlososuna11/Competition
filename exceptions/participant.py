@@ -3,7 +3,12 @@ class IncompleteParticipantData(Exception):
     Raised when a participant has not complete data
     """
 
-    def __init__(self, position: int, actual_length: int, needed_length: int) -> None:
+    def __init__(
+        self,
+        position: int,
+        actual_length: int,
+        needed_length: int
+    ) -> None:
         """
         Constructor.
 
