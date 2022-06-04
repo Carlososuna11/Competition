@@ -23,6 +23,24 @@ def is_text_plain_file(filepath: str) -> bool:
     return not is_binary_string(open(filepath, 'rb').read(1024))
 
 
+def is_text_plain_v2(filepath: str) -> bool:
+    """
+    Check if the file is a text plain file.
+
+    Params:
+        filename (str): The path of the file.
+
+    Returns:
+        bool: True if the file is a text plain file, False otherwise.
+    """
+    try:
+        file = open(filepath, 'r')
+        file.read(1024)
+    except UnicodeDecodeError:
+        return False
+    return True
+
+
 def get_path(path: str) -> str:
     """
     Get the absolute path of the file.

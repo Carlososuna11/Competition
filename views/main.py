@@ -11,7 +11,7 @@ from views.utils import (
     generate_menu_options
 )
 
-
+# first call the decorator and then will call the function
 @loop_menu
 def main(context: dict) -> dict:
     """
@@ -24,6 +24,7 @@ def main(context: dict) -> dict:
         dict: The context of the application.
     """
     option = None
+    # generate the menu options
     options = {
         "Archivo": file_menu,
         "Acciones": actions_menu,
