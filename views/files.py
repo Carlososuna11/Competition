@@ -81,8 +81,8 @@ def load_file_custom_menu(context: dict) -> dict:
     """
     filename = input(
         "**Nota**: si el archivo está en una"
-        " subcarpeta (Ej: data/competition.txt)\n usar './' o no declarar el"
-        " '/' al inicio\nIngresa la ruta del archivo : ")
+        " subcarpeta (Ej: data/competencia.txt)\n usar './' o no declarar el"
+        " '/' al inicio\n\nPara volver solo presiona enter\n\nIngresa la ruta del archivo : ")
     arguments = {"context": context, "filename": filename}
     context = load_participant_data(**arguments)
     return {"return": True, **context}
